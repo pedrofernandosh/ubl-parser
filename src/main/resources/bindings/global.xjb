@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+	version="2.1">
+	<!-- global bindings -->
+	<jaxb:bindings>
+		<jaxb:globalBindings typesafeEnumMaxMembers="2048">
+			<jaxb:serializable uid="1" />
+			<!-- Use a simple binding mode, an extension provided by the RI XJC compiler. 
+				This mode gets rid of a lot of singleton types from the generated code, streamlining 
+				it greatly. -->
+			<xjc:simple />
+		</jaxb:globalBindings>
+	</jaxb:bindings>
+	<!-- MAIN DOC -->
+	<jaxb:bindings schemaLocation="../schemas/maindoc/DIAN_UBL_Structures.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.maindoc.dianublstructures"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/maindoc/UBL-ApplicationResponse-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.maindoc.applicationresponse"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/maindoc/UBL-AttachedDocument-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.maindoc.attacheddocument"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/maindoc/UBL-CreditNote-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.maindoc.creditnote"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/maindoc/UBL-DebitNote-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.maindoc.debitnote"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/maindoc/UBL-Invoice-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.maindoc.invoice"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<!-- COMMON -->
+	<jaxb:bindings schemaLocation="../schemas/common/CCTS_CCT_SchemaModule-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.cctscct"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-CommonAggregateComponents-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.cac"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-CommonBasicComponents-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.cbc"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-CommonExtensionComponents-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.ext"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-CommonSignatureComponents-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.csc"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-CoreComponentParameters-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.ccp"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-QualifiedDataTypes-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.qdt"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-SignatureAggregateComponents-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.sac"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-SignatureBasicComponents-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.sbc"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-UnqualifiedDataTypes-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.udt"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-XAdESv132-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.xadesv132"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-XAdESv141-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.xadesv141"></jaxb:package>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	<jaxb:bindings schemaLocation="../schemas/common/UBL-xmldsig-core-schema-2.1.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.proactivedevs.ublparser.model.pojo.ubl.common.xmldsig"></jaxb:package>
+		</jaxb:schemaBindings>
+		<jaxb:bindings node="//xsd:complexType[@name='X509IssuerSerialType']//xsd:element[@name='X509SerialNumber']">
+			<jaxb:javaType name="java.lang.Integer" />
+		</jaxb:bindings>
+	</jaxb:bindings>
+</jaxb:bindings>
