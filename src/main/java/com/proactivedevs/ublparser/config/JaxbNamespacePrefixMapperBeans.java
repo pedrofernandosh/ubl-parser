@@ -72,4 +72,143 @@ public class JaxbNamespacePrefixMapperBeans {
         };
     }
 
+    // =========================================================================
+    // =========================================================================
+    //
+    @Bean(name = "debitNoteNamespacePrefixMapper")
+    public NamespacePrefixMapper debitNoteNamespacePrefixMapper() {
+        return new NamespacePrefixMapper() {
+
+            private final Map<String, String> MAP = new HashMap<>();
+
+            @Override
+            public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
+
+                // Default
+                MAP.put("http://www.w3.org/2001/XMLSchema-instance", "xsi");
+                MAP.put(XMLSignature.XMLNS, "ds");
+                // maindoc
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:DebitNote-2", "");
+                MAP.put("dian:gov:co:facturaelectronica:Structures-2-1", "sts");
+                // common
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2", "ext");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2", "cbc");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2", "cac");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:SignatureBasicComponents-2", "sbc");
+                MAP.put("http://uri.etsi.org/01903/v1.3.2#", "xades");
+                MAP.put("http://uri.etsi.org/01903/v1.4.1#", "xades141");
+
+                return MAP.getOrDefault(namespaceUri, suggestion);
+            }
+        };
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    @Bean(name = "applicationResponseNamespacePrefixMapper")
+    public NamespacePrefixMapper applicationResponseNamespacePrefixMapper() {
+        return new NamespacePrefixMapper() {
+
+            private final Map<String, String> MAP = new HashMap<>();
+
+            @Override
+            public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
+
+                // Default
+                MAP.put("http://www.w3.org/2001/XMLSchema-instance", "xsi");
+                MAP.put(XMLSignature.XMLNS, "ds");
+                // maindoc
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2", "");
+                MAP.put("dian:gov:co:facturaelectronica:Structures-2-1", "sts");
+                // common
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2", "ext");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2", "cbc");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2", "cac");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:SignatureBasicComponents-2", "sbc");
+                MAP.put("http://uri.etsi.org/01903/v1.3.2#", "xades");
+                MAP.put("http://uri.etsi.org/01903/v1.4.1#", "xades141");
+
+                return MAP.getOrDefault(namespaceUri, suggestion);
+            }
+        };
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    @Bean(name = "attachedDocumentNamespacePrefixMapper")
+    public NamespacePrefixMapper attachedDocumentNamespacePrefixMapper() {
+        return new NamespacePrefixMapper() {
+
+            private final Map<String, String> MAP = new HashMap<>();
+
+            @Override
+            public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
+
+                // Default
+                MAP.put("http://www.w3.org/2001/XMLSchema-instance", "xsi");
+                MAP.put(XMLSignature.XMLNS, "ds");
+                // maindoc
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:AttachedDocument-2", "");
+                // common
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2", "ext");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2", "cbc");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2", "cac");
+
+                return MAP.getOrDefault(namespaceUri, suggestion);
+            }
+        };
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    @Bean(name = "dianExtensionsNamespacePrefixMapper")
+    public NamespacePrefixMapper dianExtensionsNamespacePrefixMapper() {
+        return new NamespacePrefixMapper() {
+
+            private final Map<String, String> MAP = new HashMap<>();
+
+            @Override
+            public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
+
+                // Default
+                MAP.put("http://www.w3.org/2001/XMLSchema-instance", "xsi");
+                // maindoc
+                MAP.put("dian:gov:co:facturaelectronica:Structures-2-1", "sts");
+                // common
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2", "ext");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2", "cbc");
+                MAP.put("urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2", "cac");
+
+                return MAP.getOrDefault(namespaceUri, suggestion);
+            }
+        };
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    @Bean(name = "xadesSignatureNamespacePrefixMapper")
+    public NamespacePrefixMapper xadesSignatureNamespacePrefixMapper() {
+        return new NamespacePrefixMapper() {
+
+            private final Map<String, String> MAP = new HashMap<>();
+
+            @Override
+            public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
+
+                // default
+                MAP.put("http://www.w3.org/2001/XMLSchema-instance", "xsi");
+                MAP.put(XMLSignature.XMLNS, "ds");
+                // common
+                MAP.put("http://uri.etsi.org/01903/v1.3.2#", "xades");
+                MAP.put("http://uri.etsi.org/01903/v1.4.1#", "xades141");
+
+                return MAP.getOrDefault(namespaceUri, suggestion);
+            }
+        };
+    }
+
 }

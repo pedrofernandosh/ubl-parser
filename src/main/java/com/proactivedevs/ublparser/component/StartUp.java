@@ -1,5 +1,6 @@
 package com.proactivedevs.ublparser.component;
 
+import com.proactivedevs.ublparser.config.JaxbObjectFactoryFacade;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.OrderReference;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.ID;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.IssueDate;
@@ -25,13 +26,16 @@ public class StartUp implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        com.proactivedevs.ublparser.model.pojo.ubl.maindoc.invoice.ObjectFactory objectFactoryInvoice = new com.proactivedevs.ublparser.model.pojo.ubl.maindoc.invoice.ObjectFactory();
-        com.proactivedevs.ublparser.model.pojo.ubl.common.cac.ObjectFactory objectFactoryCac = new com.proactivedevs.ublparser.model.pojo.ubl.common.cac.ObjectFactory();
-        com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.ObjectFactory objectFactoryCbc = new com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.ObjectFactory();
+        Invoice invoice = JaxbObjectFactoryFacade.getINVOICE().createInvoice();
 
-        Invoice invoice = objectFactoryInvoice.createInvoice();
+        // ID
+        ID id = JaxbObjectFactoryFacade.getCBC().createID();
+        id.setValue("SETP990000312");
 
-        IssueDate issueDate = objectFactoryCbc.createIssueDate();
+        invoice.setID(id);
+
+        // IssueDate
+        IssueDate issueDate = JaxbObjectFactoryFacade.getCBC().createIssueDate();
         Instant now = new Date().toInstant();
         String dateTimeString = now.toString();
         XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTimeString);
@@ -39,16 +43,12 @@ public class StartUp implements ApplicationRunner {
 
         invoice.setIssueDate(issueDate);
 
-        OrderReference orderReference = objectFactoryCac.createOrderReference();
-
-        ID id = objectFactoryCbc.createID();
-        id.setValue("1234");
-
-        orderReference.setID(id);
-        orderReference.setIssueDate(issueDate);
-
-        invoice.setOrderReference(orderReference);
-
+        // AccountingSupplierParty
+        // AccountingCustomerParty
+        // LegalMonetaryTotal
+        // InvoiceLine
+        // ---------------------------------------------------------------------
+        //
         String xml = invoiceService.parseXML(invoice);
 
         System.out.println(xml);
@@ -57,6 +57,7 @@ public class StartUp implements ApplicationRunner {
             out.print(xml);
         }
 
+        // ---------------------------------------------------------------------
     }
 
 }
