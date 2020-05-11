@@ -48,13 +48,13 @@ public class JaxbMarshallerBeans {
         Resource xsd_xades141 = new ClassPathResource("/schemas/common/UBL-XAdESv141-2.1.xsd");
 
         marshaller.setSchemas(
-                xsd_dianublstructures,
-                xsd_invoice,
-                xsd_cac,
-                xsd_cbc,
-                xsd_ext,
-                xsd_xades132,
-                xsd_xades141
+//                xsd_dianublstructures,
+//                xsd_invoice,
+//                xsd_cac,
+//                xsd_cbc,
+//                xsd_ext,
+//                xsd_xades132,
+//                xsd_xades141
         );
 
         marshaller.setSchemaLanguage(XMLConstants.W3C_XML_SCHEMA_NS_URI);

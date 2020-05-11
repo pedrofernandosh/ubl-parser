@@ -1,21 +1,16 @@
 package com.proactivedevs.ublparser.component;
 
-import com.proactivedevs.ublparser.config.JaxbObjectFactoryFacade;
-import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.OrderReference;
-import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.ID;
-import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.IssueDate;
-import com.proactivedevs.ublparser.model.pojo.ubl.maindoc.invoice.Invoice;
 import com.proactivedevs.ublparser.service.InvoiceService;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.time.Instant;
-import java.util.Date;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import com.proactivedevs.ublparser.builder.InvoiceBuilder;
+import com.proactivedevs.ublparser.facade.common.CAC_Facade;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyIdentification;
+import java.util.Date;
 
 @Component
 public class StartUp implements ApplicationRunner {
@@ -26,30 +21,133 @@ public class StartUp implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        Invoice invoice = JaxbObjectFactoryFacade.getINVOICE().createInvoice();
+        final String invoice_ublVersionID = "UBL 2.1";
+        final String invoice_customizationID = "05";
+        final String invoice_profileID = "DIAN 2.1";
+        final String invoice_profileExecutionID = "2";
+        final String invoice_id = "SETP990000312";
+        final String invoice_uuid = "6fb91bf7159fdbf5560f6afa567a55205f8704200ce8330c1c162eaffa4aeb9caabdc4995eb24a3f32de0198b287e214";
+        final String invoice_uuid_schemeID = "2";
+        final String invoice_uuid_schemeName = "CUFE-SHA384";
+        Date now = new Date();
+        final Date invoice_issueDate = now;
+        final Date invoice_issueTime = now;
+        final String invoice_invoiceTypeCode = "01";
+        final String[] invoice_notes = {""};
+        final String invoice_documentCurrencyCode = "COP";
+        final String invoice_lineCountNumeric = "1";
+        final String invoice_orderReference_id = "1";
+        final Date invoice_orderReference_issueDate = now;
 
-        // ID
-        ID id = JaxbObjectFactoryFacade.getCBC().createID();
-        id.setValue("SETP990000312");
+        final PartyIdentification[] invoice_taxRepresentativeParty_partyIdentifications = {
+            CAC_Facade.getPartyIdentification(
+            "195",
+            "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)",
+            "9",
+            "31",
+            "900133732"
+            )
+        };
 
-        invoice.setID(id);
+        final String invoice_paymentMeans_id = "1";
+        final String invoice_paymentMeans_paymentMeansCode = "10";
+        final String[] invoice_paymentMeans_paymentIDs = {"1"};
 
-        // IssueDate
-        IssueDate issueDate = JaxbObjectFactoryFacade.getCBC().createIssueDate();
-        Instant now = new Date().toInstant();
-        String dateTimeString = now.toString();
-        XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTimeString);
-        issueDate.setValue(date2);
+        final String invoice_paymentExchangeRate_sourceCurrencyCode = "COP";
+        final String invoice_paymentExchangeRate_sourceCurrencyBaseRate = "1.00";
+        final String invoice_paymentExchangeRate_targetCurrencyCode = "COP";
+        final String invoice_paymentExchangeRate_targetCurrencyBaseRate = "1.00";
+        final String invoice_paymentExchangeRate_calculationRate = "1.00";
+        final Date invoice_paymentExchangeRate_date = now;
 
-        invoice.setIssueDate(issueDate);
+        final String invoice_legalMonetaryTotal_currency = "COP";
+        final String invoice_legalMonetaryTotal_lineExtensionAmount = "60000.00";
+        final String invoice_legalMonetaryTotal_taxExclusiveAmount = "0.00";
+        final String invoice_legalMonetaryTotal_taxInclusiveAmount = "60000.00";
+        final String invoice_legalMonetaryTotal_allowanceTotalAmount = "0.00";
+        final String invoice_legalMonetaryTotal_chargeTotalAmount = "0.00";
+        final String invoice_legalMonetaryTotal_payableAmount = "60000.00";
 
-        // AccountingSupplierParty
-        // AccountingCustomerParty
-        // LegalMonetaryTotal
-        // InvoiceLine
+        final String invoice_invoiceLine_currency = "COP";
+        final String invoice_invoiceLine_id = "1";
+        final String invoice_invoiceLine_invoicedQuantity = "20.0000";
+        final String invoice_invoiceLine_LineExtensionAmount = "60000.00";
+        final boolean invoice_invoiceLine_freeOfChargeIndicator = false;
+        final String[] invoice_invoiceLine_item_descriptions = {"PRODUCTO EXCLUIDO"};
+        final String invoice_invoiceLine_item_standardItemIdentification_id = "prod-excluido";
+        final String invoice_invoiceLine_item_standardItemIdentification_id_schemeID = "999";
+        final String invoice_invoiceLine_item_standardItemIdentification_id_schemeName = "Estandar del contribuyente";
+        final String invoice_invoiceLine_price_priceAmount = "3000.00";
+        final String invoice_invoiceLine_price_baseQuantity = "20.0000";
+        final String invoice_invoiceLine_price_baseQuantity_unitCode = "EA";
+
+        // ---------------------------------------------------------------------
+        // populate invoice object
         // ---------------------------------------------------------------------
         //
-        String xml = invoiceService.parseXML(invoice);
+        InvoiceBuilder ib = new InvoiceBuilder();
+
+        ib
+                // UBLExtensions
+                .setUBLVersionID(invoice_ublVersionID)
+                .setCustomizationID(invoice_customizationID)
+                .setProfileID(invoice_profileID)
+                .setProfileExecutionID(invoice_profileExecutionID)
+                .setID(invoice_id)
+                .setUUID(invoice_uuid_schemeID, invoice_uuid_schemeName, invoice_uuid)
+                .setIssueDate(invoice_issueDate)
+                .setIssueTime(invoice_issueTime)
+                .setInvoiceTypeCode(invoice_invoiceTypeCode)
+                .addNote(invoice_notes[0])
+                .setDocumentCurrencyCode(invoice_documentCurrencyCode)
+                .setLineCountNumeric(invoice_lineCountNumeric)
+                .setOrderReference(
+                        invoice_orderReference_id,
+                        invoice_orderReference_issueDate
+                )
+                // AccountingSupplierParty
+                // AccountingCustomerParty
+                .setTaxRepresentativeParty(invoice_taxRepresentativeParty_partyIdentifications)
+                .addPaymentMeans(
+                        invoice_paymentMeans_id,
+                        invoice_paymentMeans_paymentMeansCode,
+                        invoice_paymentMeans_paymentIDs
+                )
+                .setPaymentExchangeRate(
+                        invoice_paymentExchangeRate_sourceCurrencyCode,
+                        invoice_paymentExchangeRate_sourceCurrencyBaseRate,
+                        invoice_paymentExchangeRate_targetCurrencyCode,
+                        invoice_paymentExchangeRate_targetCurrencyBaseRate,
+                        invoice_paymentExchangeRate_calculationRate,
+                        invoice_paymentExchangeRate_date)
+                .setLegalMonetaryTotal(
+                        invoice_legalMonetaryTotal_currency,
+                        invoice_legalMonetaryTotal_lineExtensionAmount,
+                        invoice_legalMonetaryTotal_taxExclusiveAmount,
+                        invoice_legalMonetaryTotal_taxInclusiveAmount,
+                        invoice_legalMonetaryTotal_allowanceTotalAmount,
+                        invoice_legalMonetaryTotal_chargeTotalAmount,
+                        invoice_legalMonetaryTotal_payableAmount
+                )
+                .addInvoiceLine(
+                        invoice_invoiceLine_currency,
+                        invoice_invoiceLine_id,
+                        invoice_invoiceLine_invoicedQuantity,
+                        invoice_invoiceLine_LineExtensionAmount,
+                        invoice_invoiceLine_freeOfChargeIndicator,
+                        invoice_invoiceLine_item_descriptions,
+                        invoice_invoiceLine_item_standardItemIdentification_id_schemeID,
+                        invoice_invoiceLine_item_standardItemIdentification_id_schemeName,
+                        invoice_invoiceLine_item_standardItemIdentification_id,
+                        invoice_invoiceLine_price_priceAmount,
+                        invoice_invoiceLine_price_baseQuantity,
+                        invoice_invoiceLine_price_baseQuantity_unitCode
+                );
+
+        // ---------------------------------------------------------------------
+        // ---------------------------------------------------------------------
+        //
+        String xml = invoiceService.parseXML(ib.build());
 
         System.out.println(xml);
 
