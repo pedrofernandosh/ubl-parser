@@ -1,21 +1,30 @@
 package com.proactivedevs.ublparser.facade.common;
 
 import com.proactivedevs.ublparser.facade.ObjectFactoryFacade;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.AdditionalAccountID;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.AllowanceTotalAmount;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.BaseQuantity;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.CalculationRate;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.ChargeTotalAmount;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.CityName;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.CompanyID;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.CountrySubentity;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.CountrySubentityCode;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.CustomizationID;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.Description;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.DocumentCurrencyCode;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.ElectronicMail;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.FreeOfChargeIndicator;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.ID;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.IdentificationCode;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.InvoiceTypeCode;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.InvoicedQuantity;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.IssueDate;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.IssueTime;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.Line;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.LineCountNumeric;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.LineExtensionAmount;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.Name;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.Note;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.PayableAmount;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.PaymentID;
@@ -23,12 +32,15 @@ import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.PaymentMeansCode;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.PriceAmount;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.ProfileExecutionID;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.ProfileID;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.RegistrationName;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.SourceCurrencyBaseRate;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.SourceCurrencyCode;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.TargetCurrencyBaseRate;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.TargetCurrencyCode;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.TaxExclusiveAmount;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.TaxInclusiveAmount;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.TaxLevelCode;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.Telephone;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.UBLVersionID;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.UUID;
 import java.math.BigDecimal;
@@ -351,6 +363,191 @@ public class CBC_Facade {
         paymentMeansCodeElement.setValue(value);
 
         return paymentMeansCodeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static AdditionalAccountID getAdditionalAccountID(
+            String schemeAgencyId,
+            String schemeAgencyName,
+            String value
+    ) {
+
+        AdditionalAccountID additionalAccountIDElement = ObjectFactoryFacade.get_CBC().createAdditionalAccountID();
+
+        additionalAccountIDElement.setSchemeAgencyID(schemeAgencyId);
+        additionalAccountIDElement.setSchemeAgencyName(schemeAgencyName);
+        additionalAccountIDElement.setValue(value);
+
+        return additionalAccountIDElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static Name getName(String value) {
+
+        Name nameElement = ObjectFactoryFacade.get_CBC().createName();
+
+        nameElement.setValue(value);
+
+        return nameElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static Name getName(String value, String languageId) {
+
+        Name nameElement = ObjectFactoryFacade.get_CBC().createName();
+
+        nameElement.setLanguageID(languageId);
+        nameElement.setValue(value);
+
+        return nameElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static Line getLine(String value) {
+
+        Line lineElement = ObjectFactoryFacade.get_CBC().createLine();
+
+        lineElement.setValue(value);
+
+        return lineElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static Telephone getTelephone(String value) {
+
+        Telephone telephoneElement = ObjectFactoryFacade.get_CBC().createTelephone();
+
+        telephoneElement.setValue(value);
+
+        return telephoneElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static ElectronicMail getElectronicMail(String value) {
+
+        ElectronicMail electronicMailElement = ObjectFactoryFacade.get_CBC().createElectronicMail();
+
+        electronicMailElement.setValue(value);
+
+        return electronicMailElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static TaxLevelCode getTaxLevelCode(
+            String listName,
+            String value
+    ) {
+
+        TaxLevelCode taxLevelCodeElement = ObjectFactoryFacade.get_CBC().createTaxLevelCode();
+
+        taxLevelCodeElement.setListName(listName);
+        taxLevelCodeElement.setValue(value);
+
+        return taxLevelCodeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static CompanyID getCompanyID(
+            String schemeAgencyId,
+            String schemeAgencyName,
+            String schemeID,
+            String schemeName,
+            String value
+    ) {
+
+        CompanyID companyIDElement = ObjectFactoryFacade.get_CBC().createCompanyID();
+
+        companyIDElement.setSchemeAgencyID(schemeAgencyId);
+        companyIDElement.setSchemeAgencyName(schemeAgencyName);
+        companyIDElement.setSchemeID(schemeID);
+        companyIDElement.setSchemeName(schemeName);
+        companyIDElement.setValue(value);
+
+        return companyIDElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static RegistrationName getRegistrationName(String value) {
+
+        RegistrationName registrationNameElement = ObjectFactoryFacade.get_CBC().createRegistrationName();
+
+        registrationNameElement.setValue(value);
+
+        return registrationNameElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static IdentificationCode getIdentificationCode(
+            String listAgencyId,
+            String listAgencyName,
+            String listSchemeURI,
+            String value
+    ) {
+
+        IdentificationCode identificationCodeElement = ObjectFactoryFacade.get_CBC().createIdentificationCode();
+
+        identificationCodeElement.setListAgencyID(listAgencyId);
+        identificationCodeElement.setListAgencyName(listAgencyName);
+        identificationCodeElement.setListSchemeURI(listSchemeURI);
+        identificationCodeElement.setValue(value);
+
+        return identificationCodeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static CountrySubentity getCountrySubentity(String value) {
+
+        CountrySubentity countrySubentityElement = ObjectFactoryFacade.get_CBC().createCountrySubentity();
+
+        countrySubentityElement.setValue(value);
+
+        return countrySubentityElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static CountrySubentityCode getCountrySubentityCode(String value) {
+
+        CountrySubentityCode countrySubentityCodeElement = ObjectFactoryFacade.get_CBC().createCountrySubentityCode();
+
+        countrySubentityCodeElement.setValue(value);
+
+        return countrySubentityCodeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static CityName getCityName(String value) {
+
+        CityName cityNameElement = ObjectFactoryFacade.get_CBC().createCityName();
+
+        cityNameElement.setValue(value);
+
+        return cityNameElement;
     }
 
     // =========================================================================

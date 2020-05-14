@@ -4,6 +4,8 @@ import com.proactivedevs.ublparser.facade.common.CBC_Facade;
 import com.proactivedevs.ublparser.facade.ObjectFactoryFacade;
 import com.proactivedevs.ublparser.facade.common.CAC_Facade;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyIdentification;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.AdditionalAccountID;
 import com.proactivedevs.ublparser.model.pojo.ubl.maindoc.invoice.Invoice;
 import java.util.Date;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -157,6 +159,19 @@ public class InvoiceBuilder {
     // =========================================================================
     // =========================================================================
     //
+    public InvoiceBuilder setAccountingSupplierParty(
+            AdditionalAccountID[] additionalAccountIDs,
+            PartyType party
+    ) {
+
+        this.invoice.setAccountingSupplierParty(CAC_Facade.getAccountingSupplierParty(additionalAccountIDs, party));
+
+        return this;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
     public InvoiceBuilder addPaymentMeans(
             String id,
             String paymentMeansCode,
@@ -184,7 +199,7 @@ public class InvoiceBuilder {
             Date date
     ) throws DatatypeConfigurationException {
 
-        this.invoice.setPaymentExchangeRate(CAC_Facade.getExchangeRateType(
+        this.invoice.setPaymentExchangeRate(CAC_Facade.getPaymentExchangeRate(
                 sourceCurrencyCode,
                 sourceCurrencyBaseRate,
                 targetCurrencyCode,

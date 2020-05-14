@@ -9,7 +9,16 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import com.proactivedevs.ublparser.builder.InvoiceBuilder;
 import com.proactivedevs.ublparser.facade.common.CAC_Facade;
+import com.proactivedevs.ublparser.facade.common.CBC_Facade;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.AddressLine;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.AddressType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.CountryType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.LocationType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyIdentification;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyLegalEntity;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyTaxScheme;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.AdditionalAccountID;
 import java.util.Date;
 
 @Component
@@ -39,6 +48,83 @@ public class StartUp implements ApplicationRunner {
         final String invoice_orderReference_id = "1";
         final Date invoice_orderReference_issueDate = now;
 
+        // ---------------------------------------------------------------------
+        // AccountingSupplierParty
+        // ---------------------------------------------------------------------
+        //
+        final AdditionalAccountID[] invoice_accountingSupplierParty_additionalAccountIDs = {
+            CBC_Facade.getAdditionalAccountID(
+            "195",
+            "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)",
+            "1"
+            )
+        };
+
+        final PartyType invoice_accountingSupplierParty_party = CAC_Facade.getParty(
+                new String[]{"GLOBALTEK DEVELOPMENT"},
+                CAC_Facade.getPhysicalLocation(
+                        CAC_Facade.getRegistrationAddress(
+                                "11001",
+                                "BOGOTÁ, D.C.",
+                                "BOGOTÁ, D.C.",
+                                "11",
+                                new AddressLine[]{
+                                    CAC_Facade.getAddressLine("Cl. 23 b Bis #81 a 44")
+                                },
+                                CAC_Facade.getCountry(
+                                        "COLOMBIA",
+                                        "es",
+                                        "CO",
+                                        "6",
+                                        "United Nations Economic Commission for Europe",
+                                        "urn:oasis:names:specification:ubl:codelist:gc:CountryIdentificationCode-2.1"
+                                )
+                        )
+                ),
+                new PartyTaxScheme[]{
+                    CAC_Facade.getPartyTaxScheme(
+                            "GLOBALTEK DEVELOPMENT",
+                            CBC_Facade.getCompanyID("195", "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)", "9", "31", "900133732"),
+                            CBC_Facade.getTaxLevelCode("05", "O-99"),
+                            CAC_Facade.getRegistrationAddress(
+                                    "11001",
+                                    "BOGOTÁ, D.C.",
+                                    "BOGOTÁ, D.C.",
+                                    "11",
+                                    new AddressLine[]{
+                                        CAC_Facade.getAddressLine("Cl. 23 b Bis #81 a 44")
+                                    },
+                                    CAC_Facade.getCountry(
+                                            "COLOMBIA",
+                                            "es",
+                                            "CO",
+                                            "6",
+                                            "United Nations Economic Commission for Europe",
+                                            "urn:oasis:names:specification:ubl:codelist:gc:CountryIdentificationCode-2.1"
+                                    )
+                            ),
+                            CAC_Facade.getTaxScheme("01", "IVA")
+                    )
+                },
+                new PartyLegalEntity[]{
+                    CAC_Facade.getPartyLegalEntity(
+                            "GLOBALTEK DEVELOPMENT",
+                            CBC_Facade.getCompanyID(
+                                    "195",
+                                    "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)",
+                                    "9",
+                                    "31",
+                                    "900133732"
+                            ),
+                            CAC_Facade.getCorporateRegistrationScheme("SETP", "01673867")
+                    )
+                },
+                CAC_Facade.getConact("KATHERINE", "3213052134", "Katherine.hurtado@gtd.com.co")
+        );
+
+        // ---------------------------------------------------------------------
+        // ---------------------------------------------------------------------
+        // 
         final PartyIdentification[] invoice_taxRepresentativeParty_partyIdentifications = {
             CAC_Facade.getPartyIdentification(
             "195",
@@ -105,7 +191,10 @@ public class StartUp implements ApplicationRunner {
                         invoice_orderReference_id,
                         invoice_orderReference_issueDate
                 )
-                // AccountingSupplierParty
+                .setAccountingSupplierParty(
+                        invoice_accountingSupplierParty_additionalAccountIDs,
+                        invoice_accountingSupplierParty_party
+                )
                 // AccountingCustomerParty
                 .setTaxRepresentativeParty(invoice_taxRepresentativeParty_partyIdentifications)
                 .addPaymentMeans(

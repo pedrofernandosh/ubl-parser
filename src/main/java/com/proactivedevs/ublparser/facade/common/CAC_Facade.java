@@ -9,16 +9,30 @@ import static com.proactivedevs.ublparser.facade.common.CBC_Facade.getLineExtens
 import static com.proactivedevs.ublparser.facade.common.CBC_Facade.getPayableAmount;
 import static com.proactivedevs.ublparser.facade.common.CBC_Facade.getTaxExclusiveAmount;
 import static com.proactivedevs.ublparser.facade.common.CBC_Facade.getTaxInclusiveAmount;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.AddressLine;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.AddressType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.ContactType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.CorporateRegistrationScheme;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.CountryType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.ExchangeRateType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.InvoiceLineType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.ItemIdentificationType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.ItemType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.LocationType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.MonetaryTotalType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.OrderReference;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyIdentification;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyLegalEntity;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyName;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyTaxScheme;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PaymentMeans;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PriceType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.SupplierPartyType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.TaxScheme;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.AdditionalAccountID;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.CompanyID;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cbc.TaxLevelCode;
 import java.util.Date;
 import javax.xml.datatype.DatatypeConfigurationException;
 
@@ -47,13 +61,13 @@ public class CAC_Facade {
         invoiceLineTypeElement.setID(getID(id));
         invoiceLineTypeElement.setInvoicedQuantity(getPayableAmount(invoicedQuantity));
         invoiceLineTypeElement.setFreeOfChargeIndicator(getFreeOfChargeIndicator(freeOfChargeIndicator));
-        invoiceLineTypeElement.setItem(getItemType(
+        invoiceLineTypeElement.setItem(getItem(
                 item_descriptions,
                 item_standardItemIdentification_id_schemeId,
                 item_standardItemIdentification_id_schemeName,
                 item_standardItemIdentification_id)
         );
-        invoiceLineTypeElement.setPrice(getPriceType(
+        invoiceLineTypeElement.setPrice(getPrice(
                 currency,
                 price_priceAmount,
                 price_baseQuantity,
@@ -91,7 +105,7 @@ public class CAC_Facade {
     // =========================================================================
     // =========================================================================
     //
-    public static ItemIdentificationType getItemIdentificationType(
+    public static ItemIdentificationType getStandardItemIdentification(
             String schemeId,
             String schemeName,
             String id
@@ -107,7 +121,7 @@ public class CAC_Facade {
     // =========================================================================
     // =========================================================================
     //
-    public static ExchangeRateType getExchangeRateType(
+    public static ExchangeRateType getPaymentExchangeRate(
             String sourceCurrencyCode,
             String sourceCurrencyBaseRate,
             String targetCurrencyCode,
@@ -208,7 +222,7 @@ public class CAC_Facade {
     // =========================================================================
     // =========================================================================
     //
-    public static PriceType getPriceType(
+    public static PriceType getPrice(
             String currency,
             String priceAmount,
             String baseQuantity,
@@ -226,7 +240,7 @@ public class CAC_Facade {
     // =========================================================================
     // =========================================================================
     //
-    public static ItemType getItemType(
+    public static ItemType getItem(
             String[] descriptions,
             String standardItemIdentification_id_schemeId,
             String standardItemIdentification_id_schemeName,
@@ -239,13 +253,243 @@ public class CAC_Facade {
             itemTypeElement.getDescriptions().add(CBC_Facade.getDescription(d));
         }
 
-        itemTypeElement.setStandardItemIdentification(getItemIdentificationType(
+        itemTypeElement.setStandardItemIdentification(getStandardItemIdentification(
                 standardItemIdentification_id_schemeId,
                 standardItemIdentification_id_schemeName,
                 standardItemIdentification_id)
         );
 
         return itemTypeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static ContactType getConact(
+            String name,
+            String telephone,
+            String email
+    ) {
+
+        ContactType contactTypeElement = ObjectFactoryFacade.get_CAC().createContactType();
+
+        contactTypeElement.setName(CBC_Facade.getName(name));
+        contactTypeElement.setTelephone(CBC_Facade.getTelephone(telephone));
+        contactTypeElement.setElectronicMail(CBC_Facade.getElectronicMail(email));
+
+        return contactTypeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static TaxScheme getTaxScheme(
+            String id,
+            String name
+    ) {
+
+        TaxScheme taxSchemeElement = ObjectFactoryFacade.get_CAC().createTaxScheme();
+
+        taxSchemeElement.setID(CBC_Facade.getID(id));
+        taxSchemeElement.setName(CBC_Facade.getName(name));
+
+        return taxSchemeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static AddressLine getAddressLine(String line) {
+
+        AddressLine addressLineElement = ObjectFactoryFacade.get_CAC().createAddressLine();
+
+        addressLineElement.setLine(CBC_Facade.getLine(line));
+
+        return addressLineElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static CountryType getCountry(
+            String name,
+            String languageID,
+            String identificationCode,
+            String identificationCode_listAgencyId,
+            String identificationCode_listAgencyName,
+            String identificationCode_listSchemeURI
+    ) {
+
+        CountryType countryTypeElement = ObjectFactoryFacade.get_CAC().createCountryType();
+
+        countryTypeElement.setIdentificationCode(CBC_Facade.getIdentificationCode(
+                identificationCode_listAgencyId,
+                identificationCode_listAgencyName,
+                identificationCode_listSchemeURI,
+                identificationCode
+        ));
+        countryTypeElement.setName(CBC_Facade.getName(name, languageID));
+
+        return countryTypeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static AddressType getRegistrationAddress(
+            String id,
+            String cityName,
+            String countrySubentity,
+            String countrySubentityCode,
+            AddressLine[] addressLines,
+            CountryType country
+    ) {
+
+        AddressType addressTypeElement = ObjectFactoryFacade.get_CAC().createAddressType();
+
+        addressTypeElement.setID(CBC_Facade.getID(id));
+        addressTypeElement.setCityName(CBC_Facade.getCityName(cityName));
+        addressTypeElement.setCountrySubentity(CBC_Facade.getCountrySubentity(countrySubentity));
+        addressTypeElement.setCountrySubentityCode(CBC_Facade.getCountrySubentityCode(countrySubentityCode));
+
+        for (AddressLine a : addressLines) {
+            addressTypeElement.getAddressLines().add(a);
+        }
+
+        addressTypeElement.setCountry(country);
+
+        return addressTypeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static CorporateRegistrationScheme getCorporateRegistrationScheme(
+            String id,
+            String name
+    ) {
+
+        CorporateRegistrationScheme corporateRegistrationSchemeElement = ObjectFactoryFacade.get_CAC().createCorporateRegistrationScheme();
+
+        corporateRegistrationSchemeElement.setID(CBC_Facade.getID(id));
+        corporateRegistrationSchemeElement.setName(CBC_Facade.getName(name));
+
+        return corporateRegistrationSchemeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static PartyTaxScheme getPartyTaxScheme(
+            String registrationName,
+            CompanyID companyId,
+            TaxLevelCode taxLevelCode,
+            AddressType registrationAddress,
+            TaxScheme taxScheme
+    ) {
+
+        PartyTaxScheme partyTaxSchemeElement = ObjectFactoryFacade.get_CAC().createPartyTaxScheme();
+
+        partyTaxSchemeElement.setRegistrationName(CBC_Facade.getRegistrationName(registrationName));
+        partyTaxSchemeElement.setCompanyID(companyId);
+        partyTaxSchemeElement.setTaxLevelCode(taxLevelCode);
+        partyTaxSchemeElement.setRegistrationAddress(registrationAddress);
+        partyTaxSchemeElement.setTaxScheme(taxScheme);
+
+        return partyTaxSchemeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static PartyName getPartyName(String name) {
+
+        PartyName partyNameElement = ObjectFactoryFacade.get_CAC().createPartyName();
+
+        partyNameElement.setName(CBC_Facade.getName(name));
+
+        return partyNameElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static LocationType getPhysicalLocation(AddressType address) {
+
+        LocationType locationTypeElement = ObjectFactoryFacade.get_CAC().createLocationType();
+
+        locationTypeElement.setAddress(address);
+
+        return locationTypeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static PartyLegalEntity getPartyLegalEntity(
+            String registrationName,
+            CompanyID companyID,
+            CorporateRegistrationScheme corporateRegistrationScheme
+    ) {
+
+        PartyLegalEntity partyLegalEntityElement = ObjectFactoryFacade.get_CAC().createPartyLegalEntity();
+
+        partyLegalEntityElement.setRegistrationName(CBC_Facade.getRegistrationName(registrationName));
+        partyLegalEntityElement.setCompanyID(companyID);
+        partyLegalEntityElement.setCorporateRegistrationScheme(corporateRegistrationScheme);
+
+        return partyLegalEntityElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static PartyType getParty(
+            String[] names,
+            LocationType physicalLocation,
+            PartyTaxScheme[] partyTaxSchemes,
+            PartyLegalEntity[] partyLegalEntities,
+            ContactType contact
+    ) {
+
+        PartyType partyTypeElement = ObjectFactoryFacade.get_CAC().createPartyType();
+
+        for (String n : names) {
+            partyTypeElement.getPartyNames().add(getPartyName(n));
+        }
+
+        partyTypeElement.setPhysicalLocation(physicalLocation);
+
+        for (PartyTaxScheme p : partyTaxSchemes) {
+            partyTypeElement.getPartyTaxSchemes().add(p);
+        }
+
+        for (PartyLegalEntity p : partyLegalEntities) {
+            partyTypeElement.getPartyLegalEntities().add(p);
+        }
+
+        partyTypeElement.setContact(contact);
+
+        return partyTypeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static SupplierPartyType getAccountingSupplierParty(
+            AdditionalAccountID[] additionalAccountIDs,
+            PartyType party
+    ) {
+
+        SupplierPartyType supplierPartyTypeElement = ObjectFactoryFacade.get_CAC().createSupplierPartyType();
+
+        for (AdditionalAccountID id : additionalAccountIDs) {
+            supplierPartyTypeElement.getAdditionalAccountIDs().add(id);
+        }
+
+        supplierPartyTypeElement.setParty(party);
+
+        return supplierPartyTypeElement;
     }
 
 }
