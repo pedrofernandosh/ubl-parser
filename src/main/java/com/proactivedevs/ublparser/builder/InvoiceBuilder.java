@@ -172,6 +172,19 @@ public class InvoiceBuilder {
     // =========================================================================
     // =========================================================================
     //
+    public InvoiceBuilder setAccountingCustomerParty(
+            AdditionalAccountID[] additionalAccountIDs,
+            PartyType party
+    ) {
+
+        this.invoice.setAccountingCustomerParty(CAC_Facade.getAccountingCustomerParty(additionalAccountIDs, party));
+
+        return this;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
     public InvoiceBuilder addPaymentMeans(
             String id,
             String paymentMeansCode,

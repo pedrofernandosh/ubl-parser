@@ -11,9 +11,6 @@ import com.proactivedevs.ublparser.builder.InvoiceBuilder;
 import com.proactivedevs.ublparser.facade.common.CAC_Facade;
 import com.proactivedevs.ublparser.facade.common.CBC_Facade;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.AddressLine;
-import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.AddressType;
-import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.CountryType;
-import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.LocationType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyIdentification;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyLegalEntity;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.PartyTaxScheme;
@@ -84,8 +81,17 @@ public class StartUp implements ApplicationRunner {
                 new PartyTaxScheme[]{
                     CAC_Facade.getPartyTaxScheme(
                             "GLOBALTEK DEVELOPMENT",
-                            CBC_Facade.getCompanyID("195", "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)", "9", "31", "900133732"),
-                            CBC_Facade.getTaxLevelCode("05", "O-99"),
+                            CBC_Facade.getCompanyID(
+                                    "195",
+                                    "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)",
+                                    "9",
+                                    "31",
+                                    "900133732"
+                            ),
+                            CBC_Facade.getTaxLevelCode(
+                                    "05",
+                                    "O-99"
+                            ),
                             CAC_Facade.getRegistrationAddress(
                                     "11001",
                                     "BOGOTÁ, D.C.",
@@ -120,6 +126,95 @@ public class StartUp implements ApplicationRunner {
                     )
                 },
                 CAC_Facade.getConact("KATHERINE", "3213052134", "Katherine.hurtado@gtd.com.co")
+        );
+
+        // ---------------------------------------------------------------------
+        // AccountingCustomerParty
+        // ---------------------------------------------------------------------
+        //
+        final AdditionalAccountID[] invoice_accountingCustomerParty_additionalAccountIDs = {
+            CBC_Facade.getAdditionalAccountID(
+            "195",
+            "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)",
+            "1"
+            )
+        };
+
+        final PartyType invoice_accountingCustomerParty_party = CAC_Facade.getParty(
+                new String[]{"Tienda el quincenazo"},
+                CAC_Facade.getPhysicalLocation(
+                        CAC_Facade.getRegistrationAddress(
+                                "11001",
+                                "BOGOTÁ, D.C.",
+                                "BOGOTÁ, D.C.",
+                                "11",
+                                new AddressLine[]{
+                                    CAC_Facade.getAddressLine("cll 23 b n76-54")
+                                },
+                                CAC_Facade.getCountry(
+                                        "COLOMBIA",
+                                        "es",
+                                        "CO",
+                                        "6",
+                                        "United Nations Economic Commission for Europe",
+                                        "urn:oasis:names:specification:ubl:codelist:gc:CountryIdentificationCode-2.1"
+                                )
+                        )
+                ),
+                new PartyTaxScheme[]{
+                    CAC_Facade.getPartyTaxScheme(
+                            "Tienda el quincenazo",
+                            CBC_Facade.getCompanyID(
+                                    "195",
+                                    "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)",
+                                    "9",
+                                    "31",
+                                    "900133732"
+                            ),
+                            CBC_Facade.getTaxLevelCode(
+                                    "05",
+                                    "0-99"
+                            ),
+                            CAC_Facade.getRegistrationAddress(
+                                    "11001",
+                                    "BOGOTÁ, D.C.",
+                                    "BOGOTÁ, D.C.",
+                                    "11",
+                                    new AddressLine[]{
+                                        CAC_Facade.getAddressLine("cll 23 b n76-54")
+                                    },
+                                    CAC_Facade.getCountry(
+                                            "COLOMBIA",
+                                            "es",
+                                            "CO",
+                                            "6",
+                                            "United Nations Economic Commission for Europe",
+                                            "urn:oasis:names:specification:ubl:codelist:gc:CountryIdentificationCode-2.1"
+                                    )
+                            ),
+                            CAC_Facade.getTaxScheme(
+                                    "01",
+                                    "IVA"
+                            )
+                    )
+                },
+                new PartyLegalEntity[]{
+                    CAC_Facade.getPartyLegalEntity(
+                            "Tienda el quincenazo",
+                            CBC_Facade.getCompanyID(
+                                    "195",
+                                    "CO, DIAN (Dirección de Impuestos y Aduanas Nacionales)",
+                                    "9",
+                                    "31",
+                                    "900133732"
+                            )
+                    )
+                },
+                CAC_Facade.getConact(
+                        "Katherine Hurtado",
+                        "6567888",
+                        "katherine.hurtado@gtd.com.co"
+                )
         );
 
         // ---------------------------------------------------------------------
@@ -195,7 +290,10 @@ public class StartUp implements ApplicationRunner {
                         invoice_accountingSupplierParty_additionalAccountIDs,
                         invoice_accountingSupplierParty_party
                 )
-                // AccountingCustomerParty
+                .setAccountingCustomerParty(
+                        invoice_accountingCustomerParty_additionalAccountIDs,
+                        invoice_accountingCustomerParty_party
+                )
                 .setTaxRepresentativeParty(invoice_taxRepresentativeParty_partyIdentifications)
                 .addPaymentMeans(
                         invoice_paymentMeans_id,

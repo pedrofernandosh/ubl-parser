@@ -14,6 +14,7 @@ import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.AddressType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.ContactType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.CorporateRegistrationScheme;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.CountryType;
+import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.CustomerPartyType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.ExchangeRateType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.InvoiceLineType;
 import com.proactivedevs.ublparser.model.pojo.ubl.common.cac.ItemIdentificationType;
@@ -60,6 +61,7 @@ public class CAC_Facade {
 
         invoiceLineTypeElement.setID(getID(id));
         invoiceLineTypeElement.setInvoicedQuantity(getPayableAmount(invoicedQuantity));
+        invoiceLineTypeElement.setLineExtensionAmount(getLineExtensionAmount(currency, lineExtensionAmount));
         invoiceLineTypeElement.setFreeOfChargeIndicator(getFreeOfChargeIndicator(freeOfChargeIndicator));
         invoiceLineTypeElement.setItem(getItem(
                 item_descriptions,
@@ -444,6 +446,22 @@ public class CAC_Facade {
     // =========================================================================
     // =========================================================================
     //
+    public static PartyLegalEntity getPartyLegalEntity(
+            String registrationName,
+            CompanyID companyID
+    ) {
+
+        PartyLegalEntity partyLegalEntityElement = ObjectFactoryFacade.get_CAC().createPartyLegalEntity();
+
+        partyLegalEntityElement.setRegistrationName(CBC_Facade.getRegistrationName(registrationName));
+        partyLegalEntityElement.setCompanyID(companyID);
+
+        return partyLegalEntityElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
     public static PartyType getParty(
             String[] names,
             LocationType physicalLocation,
@@ -490,6 +508,25 @@ public class CAC_Facade {
         supplierPartyTypeElement.setParty(party);
 
         return supplierPartyTypeElement;
+    }
+
+    // =========================================================================
+    // =========================================================================
+    //
+    public static CustomerPartyType getAccountingCustomerParty(
+            AdditionalAccountID[] additionalAccountIDs,
+            PartyType party
+    ) {
+
+        CustomerPartyType customerPartyTypeElement = ObjectFactoryFacade.get_CAC().createCustomerPartyType();
+
+        for (AdditionalAccountID id : additionalAccountIDs) {
+            customerPartyTypeElement.getAdditionalAccountIDs().add(id);
+        }
+
+        customerPartyTypeElement.setParty(party);
+
+        return customerPartyTypeElement;
     }
 
 }
